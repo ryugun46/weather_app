@@ -1,20 +1,32 @@
 import requests
 import json
+#Enter city name part with error handling for invalid city name
 
-city = input("Enter a city name: ")
+while True:
+    city = input("Enter city name: ")
 
-api_key = "607f24073699dcab4fa4f1b1cf2eb885"
-base_url = "https://api.openweathermap.org/data/2.5/weather"
+    api_key = "607f24073699dcab4fa4f1b1cf2eb885"
+    base_url = "https://api.openweathermap.org/data/2.5/weather"
 
-A={
+    A={
     "q": city,
     "appid": api_key,
     "units": "metric"
-}
+    }
+    #gets data from the API
+    response = requests.get(base_url,A)
+    data = response.json()
+    #Prints all of the info of the JSON provided by API(Used for checking purposes)
+    if data["cod"] == "404":
+        print("Please enter a valid city name")
+        continue
+    else:
+        break
+ #Prints all of the info of the JSON provided by API(Used for checking purposes)
 
-response = requests.get(base_url,A)
-data = response.json()
+#print(json.dumps(data,indent=3))
 
+#displays weather information
 def display_weather(city):
     city_name = data["name"]
     country = data["sys"]["country"]
@@ -30,6 +42,7 @@ def display_weather(city):
     print(f"Weather Description: {desc.upper()}")
 
 display_weather(city)
+
 
 
 
