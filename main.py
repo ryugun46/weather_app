@@ -24,7 +24,7 @@ while True:
         break
  #Prints all of the info of the JSON provided by API(Used for checking purposes)
 
-print(json.dumps(data,indent=3))
+#print(json.dumps(data,indent=3))
 
 #displays weather information
 def display_weather(city):
@@ -41,35 +41,27 @@ def display_weather(city):
     print(f"Wind Speed: {wind_speed}")
     print(f"Weather Description: {desc.upper()}")
 
-def recommendation_display():
-    if data["wind"]["speed"].values()>= 8:
-        print("Not a good day to wear a hat")
-    elif data["wind"]["speed"] <= 6:
-        print("Good day to wear a hat")
-    elif data["main"]["temp"] >= 26:
-        print("Should be sunny remember to put on sun screen for outdoor activities")
-    elif data["main"]["temp"] <= 25:
-        print("Should be good even without sun screen for outdoor activities")
 def recommendation_input():
-    detector = 0
-    while detector == 0:
-        recommendation = input("Do you want recommendations?Type(Y or N): ")
-
-        if recommendation == 'N' or 'n':
-            detector = 1
-        elif recommendation == 'Y' or 'y':
-            print(recommendation_display())
+    while True:
+        recommendation = str(input("Do you want recommendations?Type(Y or N): ")).upper()
+        if recommendation == "Y":
+            return recommendation
+        elif recommendation == "N":
+            return recommendation
         else:
+            continue
 
-            print("Please type in a valid response")
-            detector = 0
-
+def recommendation_display():
+        if data["wind"]["speed"]>= 8:
+            print("Caution high wind speeds")
+        elif data["wind"]["speed"] <= 6:
+            print("Good day to wear a hat")
 display_weather(city)
-
-recommendation_input()
-
-
-
+rec_input = recommendation_input()
+if rec_input == "N":
+    print("Congrats")
+elif rec_input == "Y":
+    (recommendation_display())
 
 
 
